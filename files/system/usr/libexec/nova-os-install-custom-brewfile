@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -oue pipefail
+
+# Install custom Brewfile packages on first boot
+# This service runs after brew-setup.service has initialized Homebrew
+BREWFILE="/usr/share/ublue-os/homebrew/custom.Brewfile"
+MARKER="/var/lib/misc/nova-os-brewfile-ran"
+
+if [[ -f "$MARKER" ]]; then
+    echo "Custom Brewfile already applied, skipping."
+    exit 0
+fi
+
+if [[ ! -f /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+    echo "Homebrew not ready yet, will retry on next boot."
+    exit 1
+fi
+
+echo "Installing custom Brewfile packages..."
+brew bundle --file="$BREWFILE"
+
+mkdir -p "$(dirname "$MARKER")"
+touch "$MARKER"

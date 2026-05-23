@@ -1,0 +1,13 @@
+[Unit]
+Description=Install custom Brewfile packages (nova-os)
+After=brew-setup.service
+Wants=brew-setup.service
+ConditionPathExists=!/var/lib/misc/nova-os-brewfile-ran
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/nova-os-install-custom-brewfile
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
