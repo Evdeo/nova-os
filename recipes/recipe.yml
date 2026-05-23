@@ -34,10 +34,6 @@ modules:
         - kate
         - ptyxis
 
-  - type: systemd
-    enabled:
-      - nova-os-custom-brew.service
-
   - type: default-flatpaks
     configurations:
       - notify: true
