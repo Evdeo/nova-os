@@ -1,5 +1,5 @@
 [Unit]
-Description=Install custom Brewfile packages (nova-os)
+Description=Install nova-os custom Brewfile packages
 After=brew-setup.service
 Wants=brew-setup.service
 ConditionPathExists=!/var/lib/misc/nova-os-brewfile-ran
