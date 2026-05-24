@@ -18,10 +18,12 @@ modules:
         - scottames/ghostty
         - che/zed
         - iucar/rstudio
+        - zhangyi6324/noctalia-shell
     install:
       packages:
         - niri
         - nautilus
+        - noctalia-shell
         - R
         - rstudio-desktop
         - zed
@@ -31,6 +33,8 @@ modules:
       packages:
         - kate
         - ptyxis
+        - konsole
+        - spectacle
 
   - type: default-flatpaks
     configurations:
@@ -56,6 +60,7 @@ modules:
           - org.gnome.gitlab.somas.Apostrophe
         remove:
           - org.kde.kontact
+          - org.mozilla.firefox
           - org.mozilla.Thunderbird
           - org.kde.kcalc
           - org.kde.kweather
