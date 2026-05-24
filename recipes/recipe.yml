@@ -3,7 +3,7 @@
 name: nova-os
 description: Custom Aurora image with Niri, Ghostty, dev tools, and curated apps
 
-base-image: ghcr.io/ublue-os/aurora
+base-image: ghcr.io/ublue-os/aurora-dx-nvidia-open
 image-version: latest
 
 modules:
