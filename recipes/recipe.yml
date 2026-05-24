@@ -35,6 +35,7 @@ modules:
         - ptyxis
         - konsole
         - spectacle
+        - alacritty
 
   - type: default-flatpaks
     configurations:
