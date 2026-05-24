@@ -52,6 +52,8 @@ modules:
           - com.spotify.Client
           - com.valvesoftware.Steam
           - dev.mufeed.Wordbook
+          - io.missioncenter.MissionCenter
+          - org.gnome.gitlab.somas.Apostrophe
         remove:
           - org.kde.kontact
           - org.mozilla.Thunderbird
