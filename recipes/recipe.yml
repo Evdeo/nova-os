@@ -36,6 +36,7 @@ modules:
         - konsole
         - spectacle
         - alacritty
+        - xwaylandvideobridge
 
   - type: default-flatpaks
     configurations:
