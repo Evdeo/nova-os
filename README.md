@@ -1,42 +1,92 @@
-# nova-os &nbsp; [![bluebuild build badge](https://github.com/evdeo/nova-os/actions/workflows/build.yml/badge.svg)](https://github.com/evdeo/nova-os/actions/workflows/build.yml)
+# nova-os
 
-See the [BlueBuild docs](https://blue-build.org/how-to/setup/) for quick setup instructions for setting up your own repository based on this template.
+[![bluebuild build badge](https://github.com/evdeo/nova-os/actions/workflows/build.yml/badge.svg)](https://github.com/evdeo/nova-os/actions/workflows/build.yml)
 
-After setup, it is recommended you update this README to describe your custom image.
+Custom Aurora image for a Niri-based desktop on NVIDIA hardware.
 
-## Installation
+## Base
 
-> [!WARNING]  
-> [This is an experimental feature](https://www.fedoraproject.org/wiki/Changes/OstreeNativeContainerStable), try at your own discretion.
+- `ghcr.io/ublue-os/aurora-dx-nvidia-open:latest`
+- Built with BlueBuild from [`recipes/recipe.yml`](recipes/recipe.yml)
+- Published as `ghcr.io/evdeo/nova-os:latest`
 
-To rebase an existing atomic Fedora installation to the latest build:
+## Included
 
-- First rebase to the unsigned image, to get the proper signing keys and policies installed:
-  ```
-  rpm-ostree rebase ostree-unverified-registry:ghcr.io/evdeo/nova-os:latest
-  ```
-- Reboot to complete the rebase:
-  ```
-  systemctl reboot
-  ```
-- Then rebase to the signed image, like so:
-  ```
-  rpm-ostree rebase ostree-image-signed:docker://ghcr.io/evdeo/nova-os:latest
-  ```
-- Reboot again to complete the installation
-  ```
-  systemctl reboot
-  ```
+RPM packages from Fedora/COPR and upstream RPM sources:
 
-The `latest` tag will automatically point to the latest build. That build will still always use the Fedora version specified in `recipe.yml`, so you won't get accidentally updated to the next major version.
+- Niri
+- xwayland-satellite
+- Noctalia shell
+- Ghostty
+- Zed
+- R and RStudio
+- Nautilus
+- wl-clipboard
+- Proton Pass RPM
 
-## ISO
+System Flatpaks managed by BlueBuild's `default-flatpaks` module:
 
-If build on Fedora Atomic, you can generate an offline ISO with the instructions available [here](https://blue-build.org/how-to/generate-iso/#_top). These ISOs cannot unfortunately be distributed on GitHub for free due to large sizes, so for public projects something else has to be used for hosting.
+- LibreWolf
+- Steam
+- Spotify
+- OBS Studio
+- Proton Mail
+- EasyEffects
+- VLC
+- qBittorrent
+- Mission Center
+- Inkscape
+- Eloquent
+- Equibop
+- FolderPlay
+- Maps
+- Apostrophe
+- Wordbook
 
-## Verification
+## Removed
 
-These images are signed with [Sigstore](https://www.sigstore.dev/)'s [cosign](https://github.com/sigstore/cosign). You can verify the signature by downloading the `cosign.pub` file from this repo and running the following command:
+The image removes unused or replaced desktop apps from the base image, including KDE terminal/editor defaults, Alacritty, Spectacle, xwaylandvideobridge, Firefox, Thunderbird, and the Proton Pass Flatpak.
+
+## Install
+
+First rebase to the unsigned image so the signing policy is installed:
+
+```bash
+rpm-ostree rebase ostree-unverified-registry:ghcr.io/evdeo/nova-os:latest
+systemctl reboot
+```
+
+Then rebase to the signed image:
+
+```bash
+rpm-ostree rebase ostree-image-signed:docker://ghcr.io/evdeo/nova-os:latest
+systemctl reboot
+```
+
+## Update
+
+Updates are delivered through the image:
+
+```bash
+rpm-ostree upgrade
+systemctl reboot
+```
+
+The `latest` tag tracks the latest successful build from this repository.
+
+## Dotfiles
+
+User configuration is managed separately with chezmoi:
+
+```bash
+chezmoi init --apply https://github.com/Evdeo/Chezmoi.git
+```
+
+The image provides system packages and default apps. The dotfiles provide Niri, Noctalia, Ghostty, browser, launcher, and session defaults.
+
+## Verify
+
+Images are signed with cosign:
 
 ```bash
 cosign verify --key cosign.pub ghcr.io/evdeo/nova-os
